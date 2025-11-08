@@ -1,4 +1,3 @@
 Main: test conflict
 feature-1: test conflict
 feature-2: test conflict
-Main: test conflict rerere

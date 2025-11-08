@@ -3,3 +3,4 @@ feature-1: test conflict
 feature-2: test conflict
 Main test conflict rerere
 feature-5: test conflict
+Main b test conflict rerere

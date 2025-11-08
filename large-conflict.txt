@@ -1,2 +1,6 @@
 Large conflict: Main
+<<<<<<< HEAD
 Large conflict: feature-A
+=======
+Large conflict: feature-B
+>>>>>>> feature-B

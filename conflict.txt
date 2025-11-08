@@ -1,10 +1,3 @@
 Main: test conflict
 feature-1: test conflict
 feature-2: test conflict
-Main test conflict rerere
-feature-5: test conflict
-<<<<<<< HEAD
-Main b test conflict rerere
-=======
-feature-5b: test conflict
->>>>>>> feature-5b

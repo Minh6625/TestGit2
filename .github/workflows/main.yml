@@ -73,23 +73,28 @@ jobs:
     needs: [build-and-test, deploy]
     if: always()
     steps:
-      - name: Send mail
+      - name: Send mail via Gmail
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: ${{ secrets.SMTP_SERVER }}
-          server_port: ${{ secrets.SMTP_PORT }}
+          server_address: smtp.gmail.com
+          server_port: 465
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: |
-            [${{ github.repository }}] CI/CD ${{ job.status }} for ${{ github.ref_name }} (#${{ github.run_number }})
+          subject: CI/CD Pipeline - ${{ job.status }} - ${{ github.repository }}
           to: ${{ secrets.NOTIFY_TO_EMAIL }}
-          from: ${{ secrets.NOTIFY_FROM_EMAIL }}
-          secure: true
-          ignore_cert: true
-          html_body: |
-            <h3>CI/CD kết quả: ${{ job.status }}</h3>
-            <p>Workflow: <b>${{ github.workflow }}</b></p>
-            <p>Branch: <b>${{ github.ref_name }}</b></p>
-            <p>Run: <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">Chi tiết</a></p>
-            <p>Báo cáo JUnit và Coverage được upload thành artifact.</p>
+          from: ${{ secrets.SMTP_USERNAME }}
+          content_type: text/html
+          convert_markdown: true
+          body: |
+            ## CI/CD Pipeline Results
+
+            **Status:** ${{ job.status }}
+            **Workflow:** ${{ github.workflow }}
+            **Branch:** ${{ github.ref_name }}
+            **Run Number:** #${{ github.run_number }}
+            **Commit:** ${{ github.sha }}
+
+            [View Details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+            Test reports and coverage artifacts have been uploaded.

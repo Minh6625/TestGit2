@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [16, 18, 20]
+        node: [18, 20]
 
     steps:
       - name: Checkout code
@@ -74,6 +74,7 @@ jobs:
     if: always()
     steps:
       - name: Send mail
+        if: ${{ secrets.SMTP_SERVER }}
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
@@ -85,6 +86,7 @@ jobs:
           to: ${{ secrets.NOTIFY_TO_EMAIL }}
           from: ${{ secrets.NOTIFY_FROM_EMAIL }}
           secure: true
+          ignore_cert: true
           html_body: |
             <h3>CI/CD kết quả: ${{ job.status }}</h3>
             <p>Workflow: <b>${{ github.workflow }}</b></p>

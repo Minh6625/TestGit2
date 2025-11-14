@@ -61,7 +61,9 @@ jobs:
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Trigger Render Deploy
-        if: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        env:
+          DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        if: env.DEPLOY_HOOK != ''
         run: |
           curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
 

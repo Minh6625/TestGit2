@@ -74,7 +74,7 @@ jobs:
     if: always()
     steps:
       - name: Send mail
-        if: ${{ secrets.SMTP_SERVER }}
+        continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}

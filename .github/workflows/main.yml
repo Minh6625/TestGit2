@@ -84,17 +84,12 @@ jobs:
           subject: CI/CD Pipeline - ${{ job.status }} - ${{ github.repository }}
           to: ${{ secrets.NOTIFY_TO_EMAIL }}
           from: ${{ secrets.SMTP_USERNAME }}
-          content_type: text/html
-          convert_markdown: true
-          body: |
-            ## CI/CD Pipeline Results
-
-            **Status:** ${{ job.status }}
-            **Workflow:** ${{ github.workflow }}
-            **Branch:** ${{ github.ref_name }}
-            **Run Number:** #${{ github.run_number }}
-            **Commit:** ${{ github.sha }}
-
-            [View Details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
-
-            Test reports and coverage artifacts have been uploaded.
+          html_body: |
+            <h2>CI/CD Pipeline Results</h2>
+            <p><strong>Status:</strong> ${{ job.status }}</p>
+            <p><strong>Workflow:</strong> ${{ github.workflow }}</p>
+            <p><strong>Branch:</strong> ${{ github.ref_name }}</p>
+            <p><strong>Run Number:</strong> #${{ github.run_number }}</p>
+            <p><strong>Commit:</strong> ${{ github.sha }}</p>
+            <p><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">View Details</a></p>
+            <p>Test reports and coverage artifacts have been uploaded.</p>
